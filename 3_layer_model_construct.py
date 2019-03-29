@@ -22,10 +22,8 @@ import pathlib
 ### Create Dataset 10000 train data; 10000 test data
 (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.mnist.load_data()
 
-# First 3 layers data
 train_labels = train_labels[:10000].astype('int64')
 test_labels = test_labels[:10000].astype('int64')
-
 train_images = train_images[:10000].reshape(-1, 28 * 28) / 255.0
 test_images = test_images[:10000].reshape(-1, 28 * 28) / 255.0
 
@@ -48,6 +46,7 @@ def create_model():
 model = create_model()
 model.summary()
 model.fit(train_images, train_labels, epochs=5)
+
 # eval test
 start = time.time()
 loss, acc = model.evaluate(test_images, test_labels)
@@ -80,7 +79,7 @@ eval_model_original(predictions, ds)
 time_elapsed = time.time() - start
 print("prediction time_elapsed=",time_elapsed)
 
-# save
+# save model
 saved_models_root = "./saved_models/first"
 print("saved_models_root =", saved_models_root)
 tf.contrib.saved_model.save_keras_model(model, saved_models_root)
