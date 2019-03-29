@@ -189,43 +189,8 @@ print ("Y_test shape: " + str(y_test.shape))
 
 model.fit(x_train, y_train, epochs = 20, batch_size = 128)
 
-# # Evaluate the original model speed & accuracy
-
-def eval_model_resnet50(predictions, y_test):
-    
-    label_final = np.argmax(predictions, axis=1)
-    pred_final = np.argmax(y_test, axis=1)
-    
-    prediction_size = pred_final.size
-    total_seen = 0
-    num_correct = 0
-    
-    for i in range(0,prediction_size):
-        total_seen += 1
-        if pred_final[i] == label_final[i]:
-            num_correct += 1
-        if total_seen % 500 == 0:
-            print("Accuracy after %i images: %f" %
-                 (total_seen, float(num_correct) / float(total_seen)))
-    return float(num_correct) / float(total_seen)
-
-print("model.predict function...")
-start = time.time()
-predictions = model.predict(x_test, batch_size = 1)
-eval_model_resnet50(predictions, y_test)
-time_elapsed = time.time() - start
-print("time_elapsed=",time_elapsed)
-print("------------------")
-
-# model.evaluate function
-print("model.evaluate function...")
-start = time.time()
-preds = model.evaluate(x_test, y_test, batch_size = 1)
-time_elapsed = time.time() - start
-print("time pass=", time_elapsed)
-print ("Loss = " + str(preds[0]))
-print ("Test Accuracy = " + str(preds[1]))
-
 # save model
 filepath = "Resnet50_1.h5"
 model.save(filepath)
+
+print("done!")
